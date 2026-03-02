@@ -675,6 +675,24 @@ declare namespace App {
           realtimePendingChanges: string;
         };
         featureFlag: {
+          featureKey: string;
+          configDefault: string;
+          rolloutPercentage: string;
+          scope: string;
+          override: string;
+          toggle: string;
+          enabled: string;
+          disabled: string;
+          platformOnly: string;
+          tenantOnly: string;
+          all: string;
+          default: string;
+          forceOn: string;
+          forceOff: string;
+          reset: string;
+          resetConfirm: string;
+          toggleSuccess: string;
+          purgeSuccess: string;
           realtimeRefreshed: string;
         };
         tenant: {
@@ -823,6 +841,7 @@ declare namespace App {
         };
         theme: {
           scope: string;
+          projectDefault: string;
           sharedScope: string;
           version: string;
           effectiveVersion: string;

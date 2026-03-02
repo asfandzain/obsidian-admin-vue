@@ -421,6 +421,24 @@ const local: App.I18n.Schema = {
       realtimePendingChanges: 'Remote update detected. Save or reset your local changes before refreshing.'
     },
     featureFlag: {
+      featureKey: 'Feature Key',
+      configDefault: 'Config Default',
+      rolloutPercentage: 'Rollout %',
+      scope: 'Scope',
+      override: 'Override',
+      toggle: 'Toggle',
+      enabled: 'Enabled',
+      disabled: 'Disabled',
+      platformOnly: 'Platform Only',
+      tenantOnly: 'Tenant Only',
+      all: 'All',
+      default: 'Default',
+      forceOn: 'Force ON',
+      forceOff: 'Force OFF',
+      reset: 'Reset',
+      resetConfirm: 'Revert to config default?',
+      toggleSuccess: 'Feature "{key}" {status}',
+      purgeSuccess: 'Overrides for "{key}" purged',
       realtimeRefreshed: 'Feature flag list reloaded from latest system update.'
     },
     tenant: {
@@ -571,6 +589,7 @@ const local: App.I18n.Schema = {
     },
     theme: {
       scope: 'Scope',
+      projectDefault: 'Project Default',
       sharedScope: 'Shared for all tenant contexts',
       version: 'Profile Version',
       effectiveVersion: 'Effective Version',

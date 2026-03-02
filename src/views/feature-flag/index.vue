@@ -41,7 +41,7 @@ const { columns, columnChecks, data, getData, getDataByPage, loading, mobilePagi
       render: (_, index) => (searchParams.current - 1) * searchParams.size + index + 1
     },
     {
-      title: 'Feature Key',
+      title: $t('page.featureFlag.featureKey'),
       key: 'key',
       minWidth: 180,
       render(row) {
@@ -49,7 +49,7 @@ const { columns, columnChecks, data, getData, getDataByPage, loading, mobilePagi
       }
     },
     {
-      title: 'Config Default',
+      title: $t('page.featureFlag.configDefault'),
       key: 'enabled',
       width: 120,
       align: 'center',
@@ -57,12 +57,12 @@ const { columns, columnChecks, data, getData, getDataByPage, loading, mobilePagi
         return h(
           NTag,
           { type: row.enabled ? 'success' : 'error', size: 'small', bordered: false, round: true },
-          { default: () => (row.enabled ? 'Enabled' : 'Disabled') }
+          { default: () => (row.enabled ? $t('page.featureFlag.enabled') : $t('page.featureFlag.disabled')) }
         );
       }
     },
     {
-      title: 'Rollout %',
+      title: $t('page.featureFlag.rolloutPercentage'),
       key: 'percentage',
       width: 100,
       align: 'center',
@@ -71,18 +71,30 @@ const { columns, columnChecks, data, getData, getDataByPage, loading, mobilePagi
       }
     },
     {
-      title: 'Scope',
+      title: $t('page.featureFlag.scope'),
       key: 'scope',
       width: 140,
       render(row) {
         const tags = [];
         if (row.platform_only)
           tags.push(
-            h(NTag, { size: 'small', type: 'info', bordered: false, round: true }, { default: () => 'Platform Only' })
+            h(
+              NTag,
+              { size: 'small', type: 'info', bordered: false, round: true },
+              {
+                default: () => $t('page.featureFlag.platformOnly')
+              }
+            )
           );
         if (row.tenant_only)
           tags.push(
-            h(NTag, { size: 'small', type: 'warning', bordered: false, round: true }, { default: () => 'Tenant Only' })
+            h(
+              NTag,
+              { size: 'small', type: 'warning', bordered: false, round: true },
+              {
+                default: () => $t('page.featureFlag.tenantOnly')
+              }
+            )
           );
         if (row.role_codes.length > 0) {
           tags.push(
@@ -95,27 +107,35 @@ const { columns, columnChecks, data, getData, getDataByPage, loading, mobilePagi
         }
         return tags.length > 0
           ? h('div', { class: 'flex flex-wrap gap-4px' }, tags)
-          : h('span', { class: 'text-gray-400' }, 'All');
+          : h('span', { class: 'text-gray-400' }, $t('page.featureFlag.all'));
       }
     },
     {
-      title: 'Override',
+      title: $t('page.featureFlag.override'),
       key: 'global_override',
       width: 120,
       align: 'center',
       render(row) {
         if (row.global_override === null) {
-          return h(NTag, { size: 'small', bordered: false, type: 'default' }, { default: () => 'Default' });
+          return h(
+            NTag,
+            { size: 'small', bordered: false, type: 'default' },
+            {
+              default: () => $t('page.featureFlag.default')
+            }
+          );
         }
         return h(
           NTag,
           { type: row.global_override ? 'success' : 'error', size: 'small', bordered: false, round: true },
-          { default: () => (row.global_override ? 'Force ON' : 'Force OFF') }
+          {
+            default: () => (row.global_override ? $t('page.featureFlag.forceOn') : $t('page.featureFlag.forceOff'))
+          }
         );
       }
     },
     {
-      title: 'Toggle',
+      title: $t('page.featureFlag.toggle'),
       key: 'toggle',
       width: 80,
       align: 'center',
@@ -126,14 +146,15 @@ const { columns, columnChecks, data, getData, getDataByPage, loading, mobilePagi
             const { error } = await toggleFeatureFlag(row.key, val);
             if (!error) {
               row.global_override = val;
-              window.$message?.success(`Feature "${row.key}" ${val ? 'enabled' : 'disabled'}`);
+              const status = val ? $t('page.featureFlag.enabled') : $t('page.featureFlag.disabled');
+              window.$message?.success($t('page.featureFlag.toggleSuccess', { key: row.key, status }));
             }
           }
         });
       }
     },
     {
-      title: 'Actions',
+      title: $t('common.action'),
       key: 'actions',
       width: 100,
       align: 'center',
@@ -148,13 +169,18 @@ const { columns, columnChecks, data, getData, getDataByPage, loading, mobilePagi
               const { error } = await purgeFeatureFlag(row.key);
               if (!error) {
                 row.global_override = null;
-                window.$message?.success(`Overrides for "${row.key}" purged`);
+                window.$message?.success($t('page.featureFlag.purgeSuccess', { key: row.key }));
               }
             }
           },
           {
-            trigger: () => h(NButton, { size: 'small', ghost: true, type: 'warning' }, { default: () => 'Reset' }),
-            default: () => 'Revert to config default?'
+            trigger: () =>
+              h(
+                NButton,
+                { size: 'small', ghost: true, type: 'warning' },
+                { default: () => $t('page.featureFlag.reset') }
+              ),
+            default: () => $t('page.featureFlag.resetConfirm')
           }
         );
       }

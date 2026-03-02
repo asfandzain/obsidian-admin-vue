@@ -417,6 +417,24 @@ const local: App.I18n.Schema = {
       realtimePendingChanges: '检测到远程更新，请先保存或重置本地改动后再刷新。'
     },
     featureFlag: {
+      featureKey: '功能键',
+      configDefault: '配置默认值',
+      rolloutPercentage: '灰度百分比',
+      scope: '范围',
+      override: '覆盖',
+      toggle: '开关',
+      enabled: '启用',
+      disabled: '停用',
+      platformOnly: '仅平台',
+      tenantOnly: '仅租户',
+      all: '全部',
+      default: '默认',
+      forceOn: '强制开启',
+      forceOff: '强制关闭',
+      reset: '重置',
+      resetConfirm: '确认恢复为配置默认值？',
+      toggleSuccess: '功能“{key}”已{status}',
+      purgeSuccess: '已清除“{key}”的覆盖配置',
       realtimeRefreshed: '功能开关列表已根据最新系统变更自动刷新。'
     },
     tenant: {
@@ -565,6 +583,7 @@ const local: App.I18n.Schema = {
     },
     theme: {
       scope: '作用域',
+      projectDefault: '项目默认',
       sharedScope: '全租户场景共用',
       version: '配置版本',
       effectiveVersion: '生效版本',

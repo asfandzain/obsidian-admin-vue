@@ -34,6 +34,18 @@ const hasSiderLayout = computed(() => model.layoutMode !== 'horizontal');
 const showFixedHeaderAndTab = computed(() => model.scrollMode === 'wrapper');
 const showPageAnimateMode = computed(() => model.pageAnimate);
 const showFooterHeight = computed(() => model.footerVisible);
+const scopeDisplayName = computed(() => {
+  const value = scopeName.value.trim();
+  if (!value) {
+    return '-';
+  }
+
+  if (value === 'Project Default') {
+    return $t('page.theme.projectDefault');
+  }
+
+  return value;
+});
 
 async function getData() {
   loading.value = true;
@@ -143,7 +155,7 @@ onMounted(() => {
       <NSpin :show="loading">
         <NDescriptions label-placement="left" bordered :column="3" size="small" class="mb-16px">
           <NDescriptionsItem :label="$t('page.theme.scope')">
-            <NTag type="info" size="small" :bordered="false">{{ scopeName || '-' }}</NTag>
+            <NTag type="info" size="small" :bordered="false">{{ scopeDisplayName }}</NTag>
           </NDescriptionsItem>
           <NDescriptionsItem :label="$t('page.theme.version')">
             <NTag type="default" size="small" :bordered="false">v{{ version }}</NTag>
