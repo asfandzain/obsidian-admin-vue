@@ -27,8 +27,10 @@ declare module "@elegant-router/types" {
     "iframe-page": "/iframe-page/:url";
     "language": "/language";
     "login": "/login/:module(pwd-login|code-login|register|reset-pwd|bind-wechat)?";
+    "organization": "/organization";
     "permission": "/permission";
     "role": "/role";
+    "team": "/team";
     "tenant": "/tenant";
     "theme-config": "/theme-config";
     "user": "/user";
@@ -74,8 +76,10 @@ declare module "@elegant-router/types" {
     | "iframe-page"
     | "language"
     | "login"
+    | "organization"
     | "permission"
     | "role"
+    | "team"
     | "tenant"
     | "theme-config"
     | "user"
@@ -106,8 +110,10 @@ declare module "@elegant-router/types" {
     | "dashboard"
     | "feature-flag"
     | "language"
+    | "organization"
     | "permission"
     | "role"
+    | "team"
     | "tenant"
     | "theme-config"
     | "user-center"

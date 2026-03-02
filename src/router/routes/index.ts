@@ -6,11 +6,13 @@ import { transformElegantRoutesToVueRoutes } from '../elegant/transform';
 const sidebarMenuOrder: Partial<Record<string, number>> = {
   dashboard: 1,
   tenant: 2,
-  role: 3,
-  permission: 4,
-  language: 5,
-  'theme-config': 6,
-  user: 7
+  organization: 3,
+  team: 4,
+  role: 5,
+  permission: 6,
+  language: 7,
+  'theme-config': 8,
+  user: 9
 };
 
 function applyDefaultSidebarOrder(route: ElegantRoute): ElegantRoute {

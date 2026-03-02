@@ -12,6 +12,10 @@ declare namespace Api {
       roleCode?: string | null;
       roleName?: string | null;
       roleLevel?: number;
+      organizationId?: string | null;
+      organizationName?: string | null;
+      teamId?: string | null;
+      teamName?: string | null;
       status: Api.Common.EnableStatus;
       manageable?: boolean;
       createTime: string;
@@ -33,6 +37,8 @@ declare namespace Api {
       email: string;
       roleCode: string;
       status: Api.Common.EnableStatus;
+      organizationId?: number;
+      teamId?: number;
       password?: string;
     }
 

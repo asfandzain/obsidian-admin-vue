@@ -7,6 +7,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [1.1.0] - 2026-03-03
+
+### ✨ Added
+- Added tenant-scoped **Organization** and **Team** management pages, search panels, operation drawers, API clients, and typings.
+- Added organization/team fields in user create/edit flows, including team-to-organization auto-constrain behavior.
+- Added route/i18n/api registrations for the new organization/team modules.
+
+### 🔧 Changed
+- Updated role option API usage to support `manageableOnly` query behavior in user operation flows.
+- Updated frontend API contract snapshot for new organization/team endpoints and auth session/role API shape changes.
+
+### 🐞 Fixed
+- Resolved frontend-backend contract drift detected by `pnpm contract:check`.
+- Refined form and lint/type constraints around new user organization/team bindings.
+
 ## [1.0.0] - 2026-02-23
 
 ### 🎉 Initial Public Release (Obsidian Admin Vue)

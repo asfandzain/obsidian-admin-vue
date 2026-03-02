@@ -46,6 +46,8 @@ Obsidian 持续进化 —— 扎根韧性与秩序，坚定迈向长期价值。
 - **端到端类型安全**：基于 `@hey-api/openapi-ts` 生成 SDK，强化前后端协作的类型一致性。
 - **前后端契约门禁**：内置 `Contract Gate` 与 `Compatibility Gate`，降低 API Schema 变更带来的破坏性风险。
 - **SaaS 多租户能力**：支持租户上下文、租户 Header 切换、租户维度访问控制与视图隔离。
+- **Organization / Team 管理能力**：新增组织与团队页面、搜索、抽屉操作与 API 对接，支持 Tenant 作用域下管理。
+- **用户组织/团队联动绑定**：用户创建/编辑支持组织与团队字段，团队选择自动约束组织一致性。
 - **实时更新能力**：基于 `Laravel Echo / Pusher` 的实时消息与状态同步能力。
 - **Schema 驱动界面能力**：支持 Schema 驱动的动态表单与表格，适配配置化 CRUD 场景。
 - **路由访问控制增强**：支持角色 / 权限 / 租户范围联合校验。
@@ -58,7 +60,6 @@ Obsidian 持续进化 —— 扎根韧性与秩序，坚定迈向长期价值。
 - **测试能力**：单元测试（Node test runner + `tsx`）与 E2E 测试（Playwright）
 - **供应链安全检查**：`pnpm audit`、Dependency Review
 - **CI 工作流**：GitHub Actions（`Lint` / `Contract Gate`（含 `Compatibility Gate`）/ `Supply Chain`）
-
 
 ## 使用
 

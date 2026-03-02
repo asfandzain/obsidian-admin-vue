@@ -110,6 +110,16 @@ export const generatedRoutes: GeneratedRoute[] = [
     }
   },
   {
+    name: 'organization',
+    path: '/organization',
+    component: 'layout.base$view.organization',
+    meta: {
+      title: 'organization',
+      i18nKey: 'route.organization',
+      order: 3
+    }
+  },
+  {
     name: 'permission',
     path: '/permission',
     component: 'layout.base$view.permission',
@@ -127,6 +137,16 @@ export const generatedRoutes: GeneratedRoute[] = [
       title: 'role',
       i18nKey: 'route.role',
       order: 3
+    }
+  },
+  {
+    name: 'team',
+    path: '/team',
+    component: 'layout.base$view.team',
+    meta: {
+      title: 'team',
+      i18nKey: 'route.team',
+      order: 4
     }
   },
   {

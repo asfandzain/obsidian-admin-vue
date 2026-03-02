@@ -9,13 +9,17 @@
 [src/service/api/auth.ts] fetchCustomBackendError | GET /auth/error | response=unknown | params=code:string, msg:string
 [src/service/api/auth.ts] fetchDisableTwoFactor | POST /auth/2fa/disable | response={ enabled: boolean } | params=otpCode:string
 [src/service/api/auth.ts] fetchEnableTwoFactor | POST /auth/2fa/enable | response={ enabled: boolean } | params=otpCode:string
+[src/service/api/auth.ts] fetchGetAuthSessions | GET /auth/sessions | response=Api.Auth.AuthSessionList | params=-
 [src/service/api/auth.ts] fetchGetTimezoneOptions | GET /auth/timezones | response={ defaultTimezone: string; records: Api.Auth.TimezoneOption[]; } | params=-
 [src/service/api/auth.ts] fetchGetUserInfo | GET /auth/getUserInfo | response=Api.Auth.UserInfo | params=-
 [src/service/api/auth.ts] fetchGetUserMenus | GET /auth/menus | response=Pick<Api.Auth.UserInfo, 'menuScope' | 'menus' | 'routeRules'> | params=-
 [src/service/api/auth.ts] fetchGetUserProfile | GET /auth/profile | response=Api.Auth.UserProfile | params=-
 [src/service/api/auth.ts] fetchLogin | POST /auth/login | response=Api.Auth.LoginToken | params=payload:{ userName: string; password: string; rememberMe: boolean; otpCode?: string; locale?: App.I18n.LangType | null; }
+[src/service/api/auth.ts] fetchLogout | POST /auth/logout | response={ userId: string } | params=refreshToken:string
 [src/service/api/auth.ts] fetchRefreshToken | POST /auth/refreshToken | response=Api.Auth.LoginToken | params=refreshToken:string
+[src/service/api/auth.ts] fetchRevokeAuthSession | DELETE /auth/sessions/{expr1} | response=Api.Auth.RevokeAuthSessionResult | params=sessionId:string
 [src/service/api/auth.ts] fetchSetupTwoFactor | POST /auth/2fa/setup | response={ secret: string; otpauthUrl: string; enabled: boolean } | params=-
+[src/service/api/auth.ts] fetchUpdateAuthSessionAlias | PUT /auth/sessions/{expr1}/alias | response=Api.Auth.UpdateAuthSessionAliasResult | params=sessionId:string, data:Api.Auth.UpdateAuthSessionAliasPayload
 [src/service/api/auth.ts] fetchUpdateLocale | PUT /auth/preferred-locale | response={ locale: App.I18n.LangType; preferredLocale?: App.I18n.LangType } | params=locale:App.I18n.LangType
 [src/service/api/auth.ts] fetchUpdateUserPreferences | PUT /auth/preferences | response={ themeSchema?: UnionKey.ThemeScheme | null; timezone?: string } | params=data:Api.Auth.UpdatePreferencesPayload
 [src/service/api/auth.ts] fetchUpdateUserProfile | PUT /auth/profile | response=Api.Auth.UserProfile | params=data:Api.Auth.UpdateProfilePayload
@@ -30,6 +34,11 @@
 [src/service/api/language.ts] fetchGetRuntimeLocaleMessages | GET /language/messages | response=Api.Language.RuntimeMessagesPayload | params=params:Api.Language.RuntimeMessagesParams
 [src/service/api/language.ts] fetchGetRuntimeLocales | GET /language/locales | response={ records: Api.Language.LanguageOption[] } | params=-
 [src/service/api/language.ts] fetchUpdateLanguageTranslation | PUT /language/{id} | response=unknown | params=id:number, data:Api.Language.TranslationPayload
+[src/service/api/organization.ts] fetchCreateOrganization | POST /organization | response=unknown | params=data:Api.Organization.OrganizationPayload
+[src/service/api/organization.ts] fetchDeleteOrganization | DELETE /organization/{id} | response=unknown | params=id:number
+[src/service/api/organization.ts] fetchGetAllOrganizations | GET /organization/all | response={ records: Api.Organization.OrganizationOption[] } | params=-
+[src/service/api/organization.ts] fetchGetOrganizationList | GET /organization/list | response=Api.Organization.OrganizationList | params=params:Api.Organization.OrganizationListParams
+[src/service/api/organization.ts] fetchUpdateOrganization | PUT /organization/{id} | response=unknown | params=id:number, data:Api.Organization.OrganizationPayload
 [src/service/api/permission.ts] fetchCreatePermission | POST /permission | response=unknown | params=data:Api.Permission.PermissionPayload
 [src/service/api/permission.ts] fetchDeletePermission | DELETE /permission/{id} | response=unknown | params=id:number
 [src/service/api/permission.ts] fetchGetAllPermissions | GET /permission/all | response={ records: Api.Permission.PermissionOption[] } | params=-
@@ -37,7 +46,7 @@
 [src/service/api/permission.ts] fetchUpdatePermission | PUT /permission/{id} | response=unknown | params=id:number, data:Api.Permission.PermissionPayload
 [src/service/api/role.ts] fetchCreateRole | POST /role | response=unknown | params=data:Api.Role.RolePayload
 [src/service/api/role.ts] fetchDeleteRole | DELETE /role/{id} | response=unknown | params=id:number
-[src/service/api/role.ts] fetchGetAllRoles | GET /role/all | response={ records: Api.Role.RoleOption[] } | params=-
+[src/service/api/role.ts] fetchGetAllRoles | GET /role/all | response={ records: Api.Role.RoleOption[] } | params=params:{ manageableOnly?: boolean }
 [src/service/api/role.ts] fetchGetRoleAssignablePermissions | GET /role/assignable-permissions | response={ records: Api.Permission.PermissionOption[] } | params=-
 [src/service/api/role.ts] fetchGetRoleList | GET /role/list | response=Api.Role.RoleList | params=params:Api.Role.RoleListParams
 [src/service/api/role.ts] fetchSyncRolePermissions | PUT /role/{id}/permissions | response=unknown | params=id:number, permissionCodes:string[]
@@ -45,6 +54,11 @@
 [src/service/api/route.ts] fetchGetConstantRoutes | GET /route/getConstantRoutes | response=Api.Route.MenuRoute[] | params=-
 [src/service/api/route.ts] fetchGetUserRoutes | GET /route/getUserRoutes | response=Api.Route.UserRoute | params=-
 [src/service/api/route.ts] fetchIsRouteExist | GET /route/isRouteExist | response=boolean | params=routeName:string
+[src/service/api/team.ts] fetchCreateTeam | POST /team | response=unknown | params=data:Api.Team.TeamPayload
+[src/service/api/team.ts] fetchDeleteTeam | DELETE /team/{id} | response=unknown | params=id:number
+[src/service/api/team.ts] fetchGetAllTeams | GET /team/all | response={ records: Api.Team.TeamOption[] } | params=params:{ organizationId?: number }
+[src/service/api/team.ts] fetchGetTeamList | GET /team/list | response=Api.Team.TeamList | params=params:Api.Team.TeamListParams
+[src/service/api/team.ts] fetchUpdateTeam | PUT /team/{id} | response=unknown | params=id:number, data:Api.Team.TeamPayload
 [src/service/api/tenant.ts] fetchCreateTenant | POST /tenant | response=unknown | params=data:Api.Tenant.TenantPayload
 [src/service/api/tenant.ts] fetchDeleteTenant | DELETE /tenant/{id} | response=unknown | params=id:number
 [src/service/api/tenant.ts] fetchGetAllTenants | GET /tenant/all | response={ records: Api.Tenant.TenantOption[] } | params=-

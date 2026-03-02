@@ -47,6 +47,8 @@ Obsidian continues to evolve — rooted in resilience and order, marching steadf
 - **End-to-end type safety**: SDK generation via `@hey-api/openapi-ts` improves frontend/backend type consistency.
 - **Frontend/backend contract gates**: built-in `Contract Gate` and `Compatibility Gate` checks reduce the risk of breaking API schema changes.
 - **SaaS multi-tenant support**: tenant context, tenant header switching, tenant-scoped access control, and view isolation.
+- **Organization / Team management**: includes dedicated pages, search panels, operation drawers, and tenant-scoped API integration.
+- **User organization/team binding flow**: user create/edit supports organization and team fields, with team-to-organization auto-constrain behavior.
 - **Real-time updates**: powered by `Laravel Echo / Pusher`.
 - **Schema-driven UI capabilities**: dynamic forms and tables for configurable CRUD interfaces.
 - **Enhanced route access control**: combined role / permission / tenant-scope checks.
@@ -59,7 +61,6 @@ Obsidian continues to evolve — rooted in resilience and order, marching steadf
 - **Testing capabilities**: unit tests (Node test runner + `tsx`) and E2E testing (Playwright)
 - **Supply-chain security checks**: `pnpm audit`, Dependency Review
 - **CI workflows**: GitHub Actions (`Lint` / `Contract Gate` (including `Compatibility Gate`) / `Supply Chain`)
-
 
 ## Usage
 

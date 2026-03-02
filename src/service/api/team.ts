@@ -1,0 +1,43 @@
+import { request } from '../request';
+
+/** Get team list */
+export function fetchGetTeamList(params: Api.Team.TeamListParams) {
+  return request<Api.Team.TeamList>({
+    url: '/team/list',
+    params
+  });
+}
+
+/** Get all active teams */
+export function fetchGetAllTeams(params?: { organizationId?: number }) {
+  return request<{ records: Api.Team.TeamOption[] }>({
+    url: '/team/all',
+    params
+  });
+}
+
+/** Create team */
+export function fetchCreateTeam(data: Api.Team.TeamPayload) {
+  return request<unknown>({
+    url: '/team',
+    method: 'post',
+    data
+  });
+}
+
+/** Update team */
+export function fetchUpdateTeam(id: number, data: Api.Team.TeamPayload) {
+  return request<unknown>({
+    url: `/team/${id}`,
+    method: 'put',
+    data
+  });
+}
+
+/** Delete team */
+export function fetchDeleteTeam(id: number) {
+  return request<unknown>({
+    url: `/team/${id}`,
+    method: 'delete'
+  });
+}

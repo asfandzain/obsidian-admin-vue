@@ -10,6 +10,7 @@ defineOptions({
 
 const authStore = useAuthStore();
 const { formRef, validate } = useNaiveForm();
+const { createRequiredRule } = useFormRules();
 const emit = defineEmits<{
   (e: 'update:title', title: App.I18n.I18nKey | undefined): void;
 }>();
@@ -33,12 +34,9 @@ const showOtpField = ref(false);
 type FormRuleKey = 'userName' | 'password';
 
 const rules = computed<Record<FormRuleKey, App.Global.FormRule[]>>(() => {
-  // inside computed to make locale reactive, if not apply i18n, you can define it without computed
-  const { formRules } = useFormRules();
-
   return {
-    userName: formRules.userName,
-    password: formRules.pwd
+    userName: [createRequiredRule('form.userName.required')],
+    password: [createRequiredRule('form.pwd.required')]
   };
 });
 

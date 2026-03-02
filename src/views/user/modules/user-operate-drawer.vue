@@ -2,7 +2,14 @@
 import { computed, ref, watch } from 'vue';
 import { jsonClone } from '@sa/utils';
 import { getEnableStatusLabel, getEnableStatusOptions, getEnableStatusTagType } from '@/constants/common';
-import { fetchCreateUser, fetchGetAllRoles, fetchUpdateUser } from '@/service/api';
+import {
+  fetchCreateUser,
+  fetchGetAllOrganizations,
+  fetchGetAllRoles,
+  fetchGetAllTeams,
+  fetchUpdateUser
+} from '@/service/api';
+import { useAuthStore } from '@/store/modules/auth';
 import { useFormRules, useNaiveForm } from '@/hooks/common/form';
 import { $t } from '@/locales';
 import FormModalWrapper from '@/components/advanced/form-modal-wrapper.vue';
@@ -34,9 +41,11 @@ const visible = defineModel<boolean>('visible', {
 
 const { formRef, validate, restoreValidation } = useNaiveForm();
 const { defaultRequiredRule, patternRules } = useFormRules();
+const authStore = useAuthStore();
 
 const isViewMode = computed(() => Boolean(props.readOnly));
 const enableStatusOptions = computed(() => getEnableStatusOptions());
+const hasTenantScope = computed(() => Boolean(authStore.userInfo.currentTenantId));
 
 const title = computed(() => {
   if (isViewMode.value) {
@@ -52,7 +61,24 @@ const title = computed(() => {
 });
 
 type Model = Pick<Api.User.UserRecord, 'userName' | 'email' | 'status'>;
-type UserFormModel = Model & { roleCode: string | null; password: string; confirmPassword: string };
+type UserFormModel = Model & {
+  roleCode: string | null;
+  organizationId: number | null;
+  teamId: number | null;
+  password: string;
+  confirmPassword: string;
+};
+
+interface OrganizationOption {
+  label: string;
+  value: number;
+}
+
+interface TeamOption {
+  label: string;
+  value: number;
+  organizationId: number;
+}
 
 const model = ref<UserFormModel>(createDefaultModel());
 
@@ -61,6 +87,8 @@ function createDefaultModel(): UserFormModel {
     userName: '',
     email: '',
     roleCode: null,
+    organizationId: null,
+    teamId: null,
     password: '',
     confirmPassword: '',
     status: '1'
@@ -68,12 +96,39 @@ function createDefaultModel(): UserFormModel {
 }
 
 const roleOptions = ref<CommonType.Option<string>[]>([]);
+const organizationOptions = ref<OrganizationOption[]>([]);
+const teamOptions = ref<TeamOption[]>([]);
+
+const filteredTeamOptions = computed<CommonType.Option<number>[]>(() => {
+  const organizationId = model.value.organizationId;
+
+  return teamOptions.value
+    .filter(item => organizationId === null || item.organizationId === organizationId)
+    .map(item => ({
+      label: item.label,
+      value: item.value
+    }));
+});
 
 const selectedRoleName = computed(() => {
   const roleCode = model.value.roleCode || props.rowData?.roleCode || '';
   const role = roleOptions.value.find(item => item.value === roleCode);
 
   return role?.label || props.rowData?.roleName || $t('common.noData');
+});
+
+const selectedOrganizationName = computed(() => {
+  const organizationId = model.value.organizationId;
+  const organization = organizationOptions.value.find(item => item.value === organizationId);
+
+  return organization?.label || props.rowData?.organizationName || $t('common.noData');
+});
+
+const selectedTeamName = computed(() => {
+  const teamId = model.value.teamId;
+  const team = teamOptions.value.find(item => item.value === teamId);
+
+  return team?.label || props.rowData?.teamName || $t('common.noData');
 });
 
 const rules = computed<
@@ -154,7 +209,19 @@ function handleInitModel() {
   if (props.operateType === 'edit' && props.rowData) {
     Object.assign(model.value, jsonClone(props.rowData));
     model.value.roleCode = props.rowData.roleCode ?? null;
+    model.value.organizationId = toPositiveInt(props.rowData.organizationId);
+    model.value.teamId = toPositiveInt(props.rowData.teamId);
   }
+}
+
+function toPositiveInt(value: unknown): number | null {
+  const num = Number(value);
+
+  if (!Number.isInteger(num) || num <= 0) {
+    return null;
+  }
+
+  return num;
 }
 
 async function getRoleOptions() {
@@ -172,6 +239,45 @@ async function getRoleOptions() {
   }
 
   roleOptions.value = [];
+}
+
+async function getOrganizationOptions() {
+  organizationOptions.value = [];
+
+  const { data, error } = await fetchGetAllOrganizations();
+  if (error) {
+    return;
+  }
+
+  organizationOptions.value = data.records.map(item => ({
+    label: item.organizationName,
+    value: item.id
+  }));
+}
+
+async function getTeamOptions() {
+  teamOptions.value = [];
+
+  const { data, error } = await fetchGetAllTeams();
+  if (error) {
+    return;
+  }
+
+  teamOptions.value = data.records
+    .map(item => {
+      const organizationId = toPositiveInt(item.organizationId);
+
+      if (organizationId === null) {
+        return null;
+      }
+
+      return {
+        label: item.teamName,
+        value: item.id,
+        organizationId
+      } satisfies TeamOption;
+    })
+    .filter((item): item is TeamOption => item !== null);
 }
 
 function closeDrawer() {
@@ -192,6 +298,16 @@ async function handleSubmit() {
     roleCode,
     status: model.value.status
   };
+  const organizationId = toPositiveInt(model.value.organizationId);
+  const teamId = toPositiveInt(model.value.teamId);
+
+  if (organizationId !== null) {
+    payload.organizationId = organizationId;
+  }
+
+  if (teamId !== null) {
+    payload.teamId = teamId;
+  }
 
   const password = model.value.password;
   if (props.operateType === 'add') {
@@ -212,12 +328,57 @@ async function handleSubmit() {
   }
 }
 
+watch(
+  () => model.value.teamId,
+  teamId => {
+    if (teamId === null) {
+      return;
+    }
+
+    const selectedTeam = teamOptions.value.find(item => item.value === teamId);
+    if (!selectedTeam) {
+      return;
+    }
+
+    if (model.value.organizationId !== selectedTeam.organizationId) {
+      model.value.organizationId = selectedTeam.organizationId;
+    }
+  }
+);
+
+watch(
+  () => model.value.organizationId,
+  organizationId => {
+    const teamId = model.value.teamId;
+    if (teamId === null) {
+      return;
+    }
+
+    const selectedTeam = teamOptions.value.find(item => item.value === teamId);
+    if (!selectedTeam) {
+      model.value.teamId = null;
+      return;
+    }
+
+    if (organizationId !== selectedTeam.organizationId) {
+      model.value.teamId = null;
+    }
+  }
+);
+
 watch(visible, () => {
   if (visible.value) {
     handleInitModel();
     restoreValidation();
     if (!isViewMode.value) {
-      getRoleOptions();
+      if (!hasTenantScope.value) {
+        organizationOptions.value = [];
+        teamOptions.value = [];
+        model.value.organizationId = null;
+        model.value.teamId = null;
+      }
+
+      Promise.all([getRoleOptions(), ...(hasTenantScope.value ? [getOrganizationOptions(), getTeamOptions()] : [])]);
     }
   }
 });
@@ -294,6 +455,30 @@ watch(visible, () => {
             clearable
             :options="roleOptions"
             :placeholder="$t('common.selectRole')"
+          />
+        </NFormItem>
+      </div>
+      <div v-if="isViewMode || hasTenantScope" class="form-row">
+        <NFormItem :label="$t('page.user.organization')" path="organizationId">
+          <NInput v-if="isViewMode" :value="selectedOrganizationName" readonly placeholder="" />
+          <NSelect
+            v-else
+            v-model:value="model.organizationId"
+            clearable
+            filterable
+            :options="organizationOptions"
+            :placeholder="$t('page.user.organizationPlaceholder')"
+          />
+        </NFormItem>
+        <NFormItem :label="$t('page.user.team')" path="teamId">
+          <NInput v-if="isViewMode" :value="selectedTeamName" readonly placeholder="" />
+          <NSelect
+            v-else
+            v-model:value="model.teamId"
+            clearable
+            filterable
+            :options="filteredTeamOptions"
+            :placeholder="$t('page.user.teamPlaceholder')"
           />
         </NFormItem>
       </div>

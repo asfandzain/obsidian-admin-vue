@@ -705,6 +705,36 @@ declare namespace App {
           tenantCodePlaceholder: string;
           tenantNamePlaceholder: string;
         };
+        organization: {
+          addTitle: string;
+          editTitle: string;
+          viewTitle: string;
+          organizationCode: string;
+          organizationName: string;
+          teams: string;
+          users: string;
+          sort: string;
+          organizationCodePlaceholder: string;
+          organizationNamePlaceholder: string;
+          sortPlaceholder: string;
+          descriptionPlaceholder: string;
+        };
+        team: {
+          addTitle: string;
+          editTitle: string;
+          viewTitle: string;
+          organization: string;
+          teamCode: string;
+          teamName: string;
+          users: string;
+          sort: string;
+          organizationPlaceholder: string;
+          organizationRequired: string;
+          teamCodePlaceholder: string;
+          teamNamePlaceholder: string;
+          sortPlaceholder: string;
+          descriptionPlaceholder: string;
+        };
         role: {
           addTitle: string;
           editTitle: string;
@@ -752,6 +782,10 @@ declare namespace App {
           userName: string;
           userNamePlaceholder: string;
           emailPlaceholder: string;
+          organization: string;
+          organizationPlaceholder: string;
+          team: string;
+          teamPlaceholder: string;
           password: string;
           confirmPassword: string;
           newPassword: string;
