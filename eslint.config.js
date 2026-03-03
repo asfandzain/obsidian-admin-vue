@@ -6,6 +6,38 @@ export default defineConfig(
     ignores: ['src/service/api/generated/**']
   },
   {
+    files: ['packages/**/*.{js,cjs,mjs,ts,tsx}'],
+    rules: {
+      'no-restricted-imports': [
+        'error',
+        {
+          patterns: [
+            {
+              group: ['@/*', '~/*'],
+              message: 'Workspace packages must not depend on frontend app aliases.'
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    files: ['src/**/*.{ts,tsx,vue}'],
+    rules: {
+      'no-restricted-imports': [
+        'error',
+        {
+          patterns: [
+            {
+              group: ['@sa/*/src/**'],
+              message: 'Import from package public entrypoints instead of internal source paths.'
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
     rules: {
       'vue/multi-word-component-names': [
         'warn',

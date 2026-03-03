@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { computed, h, onMounted, reactive, ref } from 'vue';
 import { NTag, NTooltip } from 'naive-ui';
-import { getEnableStatusLabel, getEnableStatusTagType } from '@/constants/common';
 import { fetchDeleteUser, fetchGetUserList } from '@/service/api';
 import { useAuth } from '@/hooks/business/auth';
 import { useCrudSchema } from '@/hooks/business/crud-schema';
@@ -9,6 +8,7 @@ import { createCrudActionColumn } from '@/hooks/business/crud-action-column';
 import { useCrudTable } from '@/hooks/business/crud-table';
 import { useCrudPaginatedTable } from '@/hooks/business/crud-paginated-table';
 import { useTenantChanged } from '@/hooks/business/tenant-change';
+import { renderEnableStatusTag } from '@/hooks/common/table';
 import { $t } from '@/locales';
 import DynamicCrudView from '@/components/advanced/dynamic-crud-view.vue';
 import UserOperateDrawer from './modules/user-operate-drawer.vue';
@@ -177,17 +177,7 @@ const schemaColumns = computed<NaiveUI.TableColumn<Api.User.UserRecord>[]>(() =>
         title: $t(column.titleKey),
         align: column.align,
         width: column.width,
-        render: row => {
-          if (row.status === null) {
-            return null;
-          }
-
-          return h(
-            NTag,
-            { type: getEnableStatusTagType(row.status) },
-            { default: () => getEnableStatusLabel(row.status) }
-          );
-        }
+        render: row => renderEnableStatusTag(row.status)
       };
     }
 

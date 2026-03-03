@@ -29,19 +29,8 @@ jobs:
         if: ${{ secrets.BACKEND_REPO_TOKEN == '' }}
         run: git clone --depth=1 https://github.com/${{ vars.BACKEND_REPO || 'obsidianlabs-io/obsidian-admin-laravel' }}.git backend
 
-      - name: Setup pnpm
-        uses: pnpm/action-setup@v4
-        with:
-          version: 10.30.2
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v6
-        with:
-          node-version-file: .nvmrc
-          cache: pnpm
-
-      - name: Install dependencies
-        run: pnpm install --frozen-lockfile
+      - name: Setup frontend toolchain
+        uses: ./.github/actions/setup-frontend
 
       - name: API client contract snapshot gate
         run: pnpm contract:check

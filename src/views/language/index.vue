@@ -1,12 +1,11 @@
 <script setup lang="ts">
 import { computed, h, onMounted, reactive, ref } from 'vue';
-import { NButton, NPopconfirm, NTag } from 'naive-ui';
-import { getEnableStatusLabel, getEnableStatusTagType } from '@/constants/common';
+import { NButton, NPopconfirm } from 'naive-ui';
 import { fetchDeleteLanguageTranslation, fetchGetLanguageList, fetchGetLanguageOptions } from '@/service/api';
 import { useAppStore } from '@/store/modules/app';
 import { useAuth } from '@/hooks/business/auth';
 import { useCrudTable } from '@/hooks/business/crud-table';
-import { defaultTransform, useNaivePaginatedTable } from '@/hooks/common/table';
+import { defaultTransform, renderEnableStatusTag, useNaivePaginatedTable } from '@/hooks/common/table';
 import { $t, refreshRuntimeLocaleMessages } from '@/locales';
 import TableWrapper from '@/components/advanced/table-wrapper.vue';
 import LanguageOperateDrawer from './modules/language-operate-drawer.vue';
@@ -88,13 +87,7 @@ const { columns, columnChecks, data, getData, getDataByPage, loading, mobilePagi
       title: $t('common.status'),
       align: 'center',
       width: 110,
-      render: row => {
-        return h(
-          NTag,
-          { type: getEnableStatusTagType(row.status) },
-          { default: () => getEnableStatusLabel(row.status) }
-        );
-      }
+      render: row => renderEnableStatusTag(row.status)
     },
     {
       key: 'updateTime',

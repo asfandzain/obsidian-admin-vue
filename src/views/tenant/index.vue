@@ -1,13 +1,12 @@
 <script setup lang="ts">
 import { computed, h, reactive } from 'vue';
-import { NButton, NPopconfirm, NTag } from 'naive-ui';
-import { getEnableStatusLabel, getEnableStatusTagType } from '@/constants/common';
+import { NButton, NPopconfirm } from 'naive-ui';
 import { fetchDeleteTenant, fetchGetTenantList } from '@/service/api';
 import { useAppStore } from '@/store/modules/app';
 import { useAuthStore } from '@/store/modules/auth';
 import { useAuth } from '@/hooks/business/auth';
 import { useCrudTable } from '@/hooks/business/crud-table';
-import { defaultTransform, useNaivePaginatedTable } from '@/hooks/common/table';
+import { defaultTransform, renderEnableStatusTag, useNaivePaginatedTable } from '@/hooks/common/table';
 import { $t } from '@/locales';
 import TableWrapper from '@/components/advanced/table-wrapper.vue';
 import TenantOperateDrawer from './modules/tenant-operate-drawer.vue';
@@ -76,13 +75,7 @@ const { columns, columnChecks, data, getData, getDataByPage, loading, mobilePagi
       title: $t('common.status'),
       align: 'center',
       width: 110,
-      render: row => {
-        return h(
-          NTag,
-          { type: getEnableStatusTagType(row.status) },
-          { default: () => getEnableStatusLabel(row.status) }
-        );
-      }
+      render: row => renderEnableStatusTag(row.status)
     },
     {
       key: 'userCount',

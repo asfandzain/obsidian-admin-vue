@@ -1,14 +1,12 @@
 <script setup lang="ts">
-import { computed, h, onMounted, reactive, ref } from 'vue';
-import { NTag } from 'naive-ui';
-import { getEnableStatusLabel, getEnableStatusTagType } from '@/constants/common';
+import { computed, onMounted, reactive, ref } from 'vue';
 import { fetchDeleteTeam, fetchGetAllOrganizations, fetchGetTeamList } from '@/service/api';
 import { useAppStore } from '@/store/modules/app';
 import { useAuth } from '@/hooks/business/auth';
 import { createCrudActionColumn } from '@/hooks/business/crud-action-column';
 import { useCrudTable } from '@/hooks/business/crud-table';
 import { useTenantChanged } from '@/hooks/business/tenant-change';
-import { defaultTransform, useNaivePaginatedTable } from '@/hooks/common/table';
+import { defaultTransform, renderEnableStatusTag, useNaivePaginatedTable } from '@/hooks/common/table';
 import { $t } from '@/locales';
 import TableWrapper from '@/components/advanced/table-wrapper.vue';
 import TeamOperateDrawer from './modules/team-operate-drawer.vue';
@@ -98,8 +96,7 @@ const { columns, columnChecks, data, getData, getDataByPage, loading, mobilePagi
       title: $t('common.status'),
       align: 'center',
       width: 110,
-      render: row =>
-        h(NTag, { type: getEnableStatusTagType(row.status) }, { default: () => getEnableStatusLabel(row.status) })
+      render: row => renderEnableStatusTag(row.status)
     },
     {
       key: 'updateTime',

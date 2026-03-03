@@ -25,7 +25,6 @@ Though our journeys unfold apart, the foundation we forged remains eternal.
 
 Obsidian continues to evolve — rooted in resilience and order, marching steadfast toward enduring value.
 
-
 ## Features
 
 ### Foundation Capabilities
@@ -83,6 +82,7 @@ git clone https://github.com/obsidianlabs-io/obsidian-admin-vue.git
 ```bash
 pnpm i
 ```
+
 > Since this project uses the pnpm monorepo management method, please do not use npm or yarn to install dependencies.
 
 **Start Project**
@@ -100,11 +100,17 @@ pnpm build
 **Code Quality Checks (Recommended)**
 
 ```bash
-# Unified local quality checks (TypeScript + ESLint)
+# Generate and verify i18n typings (keeps locale keys and types in sync)
+pnpm i18n:types:check
+
+# Unified local quality checks (i18n typings + TypeScript + ESLint + Prettier)
 pnpm check
 
 # CI parity checks (check + unit tests)
 pnpm check:ci
+
+# Auto format
+pnpm format
 ```
 
 **API Contract Checks (Recommended)**
@@ -141,16 +147,15 @@ Strict CI contract gate (`.github/workflows/contract-gate.yml`, including `Contr
 - Repository variable: `BACKEND_REPO` (optional, defaults to `obsidianlabs-io/obsidian-admin-laravel`)
 - Missing `docs/api-contract.snapshot` in the backend checkout fails the workflow (no skip path)
 
-
 ## Acknowledgements
 
-Obsidian Admin Vue is deeply grateful to the open-source community, standing on the shoulders of the incredible **[SoybeanAdmin](https://github.com/soybeanjs/soybean-admin)**. 
+Obsidian Admin Vue is deeply grateful to the open-source community, standing on the shoulders of the incredible **[SoybeanAdmin](https://github.com/soybeanjs/soybean-admin)**.
 
-Our front-end aesthetics, elegant UI components, layout orchestration, and UnoCSS baseline would not have been possible without the meticulous engineering of the original SoybeanJS authors. 
+Our front-end aesthetics, elegant UI components, layout orchestration, and UnoCSS baseline would not have been possible without the meticulous engineering of the original SoybeanJS authors.
 If you find the interface and layout systems of Obsidian Admin Vue beautiful, we highly recommend you also star the original [SoybeanAdmin repository](https://github.com/soybeanjs/soybean-admin) to support their fantastic upstream work!
 
 ## License
 
 This project is released under the [MIT License](./LICENSE).
 
-*Copyright © 2026 Obsidian Labs & SoybeanJS Contributors.*
+_Copyright © 2026 Obsidian Labs & SoybeanJS Contributors._

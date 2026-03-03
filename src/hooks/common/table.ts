@@ -1,10 +1,12 @@
-import { computed, effectScope, onScopeDispose, reactive, shallowRef, watch } from 'vue';
+import { computed, effectScope, h, onScopeDispose, reactive, shallowRef, watch } from 'vue';
 import type { Ref } from 'vue';
+import { NTag } from 'naive-ui';
 import type { PaginationProps } from 'naive-ui';
 import { useBoolean, useTable } from '@sa/hooks';
 import type { PaginationData, TableColumnCheck, UseTableOptions } from '@sa/hooks';
 import type { FlatResponseData } from '@sa/axios';
 import { jsonClone } from '@sa/utils';
+import { getEnableStatusLabel, getEnableStatusTagType } from '@/constants/common';
 import { useAppStore } from '@/store/modules/app';
 import { $t } from '@/locales';
 
@@ -252,6 +254,14 @@ export function defaultTransform<ApiData>(
     pageSize: 10,
     total: 0
   };
+}
+
+export function renderEnableStatusTag(status: Api.Common.EnableStatus | null | undefined) {
+  if (status === null || status === undefined) {
+    return null;
+  }
+
+  return h(NTag, { type: getEnableStatusTagType(status) }, { default: () => getEnableStatusLabel(status) });
 }
 
 function getColumnChecks<Column extends NaiveUI.TableColumn<any>>(
