@@ -20,6 +20,6 @@ jobs:
         with:
           node-version-file: .nvmrc
 
-      - run: npx githublogen
+      - run: npx --yes githublogen@0.4.0-beta.1
         env:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
