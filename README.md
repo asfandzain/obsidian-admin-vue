@@ -99,6 +99,12 @@ pnpm build
 
 **代码质量检查（推荐）**
 
+新增说明：
+
+- `pnpm i18n:types:check`
+- `pnpm check` 现在包含 `i18n/type/lint/format`
+- 可选：`pnpm format`
+
 ```bash
 # 生成并校验 i18n 类型（保持翻译 key 与类型同步）
 pnpm i18n:types:check

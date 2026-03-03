@@ -99,6 +99,12 @@ pnpm build
 
 **Code Quality Checks (Recommended)**
 
+Updates:
+
+- `pnpm i18n:types:check`
+- `pnpm check` now includes `i18n/type/lint/format`
+- Optional: `pnpm format`
+
 ```bash
 # Generate and verify i18n typings (keeps locale keys and types in sync)
 pnpm i18n:types:check
