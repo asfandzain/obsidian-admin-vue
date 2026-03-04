@@ -14,6 +14,7 @@ const pageSection: App.I18n.Schema['page'] = {
       loginSuccess: '登录成功',
       welcomeBack: '欢迎回来，{userName} ！',
       userInactive: '用户已停用',
+      tenantInactive: '所属租户已停用',
       emailNotVerified: '邮箱未验证',
       invalidCredentials: '用户名或密码错误',
       twoFactorRequired: '需要双重验证码',

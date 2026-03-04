@@ -17,6 +17,7 @@ export const expiredTokenCodes = serviceCodeConfig.expiredTokenCodes;
 
 const backendMessageI18nMap: Partial<Record<string, App.I18n.I18nKey>> = {
   'User is inactive': 'page.login.common.userInactive',
+  'Tenant is inactive': 'page.login.common.tenantInactive',
   'Email is not verified': 'page.login.common.emailNotVerified',
   'Username or password is incorrect': 'page.login.common.invalidCredentials',
   'Two-factor code required': 'page.login.common.twoFactorRequired',
