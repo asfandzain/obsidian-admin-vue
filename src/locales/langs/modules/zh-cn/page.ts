@@ -12,7 +12,12 @@ const pageSection: App.I18n.Schema['page'] = {
       back: '返回',
       validateSuccess: '验证成功',
       loginSuccess: '登录成功',
-      welcomeBack: '欢迎回来，{userName} ！'
+      welcomeBack: '欢迎回来，{userName} ！',
+      userInactive: '用户已停用',
+      emailNotVerified: '邮箱未验证',
+      invalidCredentials: '用户名或密码错误',
+      twoFactorRequired: '需要双重验证码',
+      twoFactorInvalid: '双重验证码无效'
     },
     pwdLogin: {
       title: '密码登录',

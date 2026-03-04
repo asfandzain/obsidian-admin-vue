@@ -12,7 +12,12 @@ const pageSection: App.I18n.Schema['page'] = {
       back: 'Back',
       validateSuccess: 'Verification passed',
       loginSuccess: 'Login successfully',
-      welcomeBack: 'Welcome back, {userName} !'
+      welcomeBack: 'Welcome back, {userName} !',
+      userInactive: 'User is inactive',
+      emailNotVerified: 'Email is not verified',
+      invalidCredentials: 'Username or password is incorrect',
+      twoFactorRequired: 'Two-factor code required',
+      twoFactorInvalid: 'Two-factor code is invalid'
     },
     pwdLogin: {
       title: 'Password Login',

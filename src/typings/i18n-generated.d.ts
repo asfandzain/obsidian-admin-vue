@@ -297,6 +297,11 @@ declare namespace App {
           "validateSuccess": string;
           "loginSuccess": string;
           "welcomeBack": string;
+          "userInactive": string;
+          "emailNotVerified": string;
+          "invalidCredentials": string;
+          "twoFactorRequired": string;
+          "twoFactorInvalid": string;
         };
         "pwdLogin": {
           "title": string;
@@ -907,10 +912,15 @@ declare namespace App {
       | "page.login.common.codePlaceholder"
       | "page.login.common.confirm"
       | "page.login.common.confirmPasswordPlaceholder"
+      | "page.login.common.emailNotVerified"
+      | "page.login.common.invalidCredentials"
       | "page.login.common.loginOrRegister"
       | "page.login.common.loginSuccess"
       | "page.login.common.passwordPlaceholder"
       | "page.login.common.phonePlaceholder"
+      | "page.login.common.twoFactorInvalid"
+      | "page.login.common.twoFactorRequired"
+      | "page.login.common.userInactive"
       | "page.login.common.userNamePlaceholder"
       | "page.login.common.validateSuccess"
       | "page.login.common.welcomeBack"
