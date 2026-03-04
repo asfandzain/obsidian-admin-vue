@@ -14,6 +14,7 @@ const pageSection: App.I18n.Schema['page'] = {
       loginSuccess: 'Login successfully',
       welcomeBack: 'Welcome back, {userName} !',
       userInactive: 'User is inactive',
+      roleInactive: 'Role is inactive',
       tenantInactive: 'Tenant is inactive',
       organizationInactive: 'Organization is inactive',
       teamInactive: 'Team is inactive',

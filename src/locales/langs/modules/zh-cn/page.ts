@@ -14,6 +14,7 @@ const pageSection: App.I18n.Schema['page'] = {
       loginSuccess: '登录成功',
       welcomeBack: '欢迎回来，{userName} ！',
       userInactive: '用户已停用',
+      roleInactive: '角色已停用',
       tenantInactive: '所属租户已停用',
       organizationInactive: '所属组织已停用',
       teamInactive: '所属团队已停用',

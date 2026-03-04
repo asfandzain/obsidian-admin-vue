@@ -19,6 +19,7 @@ const userInactiveMessage = 'User is inactive';
 
 const backendMessageI18nMap: Partial<Record<string, App.I18n.I18nKey>> = {
   'User is inactive': 'page.login.common.userInactive',
+  'Role is inactive': 'page.login.common.roleInactive',
   'Tenant is inactive': 'page.login.common.tenantInactive',
   'Organization is inactive': 'page.login.common.organizationInactive',
   'Team is inactive': 'page.login.common.teamInactive',
