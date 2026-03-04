@@ -11,6 +11,7 @@ import {
   handleExpiredRequest,
   isSessionEndingCode,
   isTenantInactivePayload,
+  isUserInactivePayload,
   logoutCodes,
   modalLogoutCodes,
   serviceSuccessCode,
@@ -86,8 +87,11 @@ export const request = createFlatRequest(
         request.state.errMsgStack = request.state.errMsgStack.filter(msg => msg !== response.data.msg);
       }
 
-      // Tenant deactivation is a hard session boundary: single message + forced local logout.
-      if (isTenantInactivePayload(responseCode, responseMessage)) {
+      // Inactive user/tenant are hard session boundaries: single message + forced local logout.
+      if (
+        isTenantInactivePayload(responseCode, responseMessage) ||
+        isUserInactivePayload(responseCode, responseMessage)
+      ) {
         showErrorMsg(request.state, responseMessage);
         await handlePassiveLogout(false);
         return null;
