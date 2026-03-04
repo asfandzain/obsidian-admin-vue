@@ -14,6 +14,7 @@ export const serviceSuccessCode = serviceCodeConfig.successCode;
 export const logoutCodes = serviceCodeConfig.logoutCodes;
 export const modalLogoutCodes = serviceCodeConfig.modalLogoutCodes;
 export const expiredTokenCodes = serviceCodeConfig.expiredTokenCodes;
+const tenantInactiveMessage = 'Tenant is inactive';
 
 const backendMessageI18nMap: Partial<Record<string, App.I18n.I18nKey>> = {
   'User is inactive': 'page.login.common.userInactive',
@@ -25,10 +26,50 @@ const backendMessageI18nMap: Partial<Record<string, App.I18n.I18nKey>> = {
 };
 
 function localizeBackendMessage(message: string): string {
-  const normalized = String(message || '').trim();
+  const normalized = normalizeMessage(message);
   const i18nKey = backendMessageI18nMap[normalized];
 
   return i18nKey ? $t(i18nKey) : message;
+}
+
+function normalizeMessage(message: unknown): string {
+  return String(message || '').trim();
+}
+
+function parseErrorPayload(error: unknown): { code: string; message: string } {
+  if (!error || typeof error !== 'object') {
+    return { code: '', message: '' };
+  }
+
+  const response = (error as { response?: { data?: { code?: unknown; msg?: unknown } } }).response;
+
+  return {
+    code: String(response?.data?.code ?? ''),
+    message: normalizeMessage(response?.data?.msg ?? '')
+  };
+}
+
+export function isTenantInactivePayload(code: unknown, message: unknown): boolean {
+  const normalizedMessage = normalizeMessage(message);
+  const normalizedCode = String(code ?? '');
+
+  return normalizedMessage === tenantInactiveMessage && (normalizedCode === '' || normalizedCode === '8888');
+}
+
+export function isSessionEndingCode(code: unknown): boolean {
+  const normalizedCode = String(code ?? '');
+
+  return (
+    logoutCodes.includes(normalizedCode) ||
+    modalLogoutCodes.includes(normalizedCode) ||
+    expiredTokenCodes.includes(normalizedCode)
+  );
+}
+
+export function shouldSkipGlobalErrorToast(error: unknown): boolean {
+  const payload = parseErrorPayload(error);
+
+  return isSessionEndingCode(payload.code) || isTenantInactivePayload(payload.code, payload.message);
 }
 
 export function getAuthorization() {

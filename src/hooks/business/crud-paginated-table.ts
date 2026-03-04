@@ -2,6 +2,7 @@ import { computed } from 'vue';
 import { useAsyncState } from '@vueuse/core';
 import type { PaginationProps } from 'naive-ui';
 import type { FlatResponseData } from '@sa/axios';
+import { shouldSkipGlobalErrorToast } from '@/service/request/shared';
 import { defaultTransform, useNaivePaginatedTable } from '@/hooks/common/table';
 import { $t } from '@/locales';
 
@@ -45,7 +46,7 @@ export function useCrudPaginatedTable<RowData, QueryParams extends SearchParams>
       const mappedParams = options.mapParams?.(options.searchParams) ?? options.searchParams;
       const response = await options.api(normalizeQueryParams(mappedParams) as Partial<QueryParams>);
 
-      if (response.error && (options.notifyOnError ?? true)) {
+      if (response.error && (options.notifyOnError ?? true) && !shouldSkipGlobalErrorToast(response.error)) {
         const message = options.resolveErrorMessage?.(response.error) ?? $t('common.error');
         window.$message?.error(message);
       }

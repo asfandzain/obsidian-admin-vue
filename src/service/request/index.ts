@@ -9,9 +9,12 @@ import {
   expiredTokenCodes,
   getAuthorization,
   handleExpiredRequest,
+  isSessionEndingCode,
+  isTenantInactivePayload,
   logoutCodes,
   modalLogoutCodes,
   serviceSuccessCode,
+  shouldSkipGlobalErrorToast,
   showErrorMsg
 } from './shared';
 import type { RequestInstanceState } from './type';
@@ -22,6 +25,7 @@ const isHttpProxy = runtimeEnv.DEV === true && runtimeEnv.VITE_HTTP_PROXY === 'Y
 const { baseURL, otherBaseURL } = getServiceBaseURL(runtimeEnv as Env.ImportMeta, isHttpProxy);
 const apifoxToken = runtimeEnv.DEV ? String(runtimeEnv.VITE_APIFOX_TOKEN || '').trim() : '';
 const defaultHeaders = apifoxToken ? { apifoxToken } : {};
+let passiveLogoutInProgress = false;
 
 export const request = createFlatRequest(
   {
@@ -49,19 +53,30 @@ export const request = createFlatRequest(
     async onBackendFail(response, instance) {
       const authStore = useAuthStore();
       const responseCode = String(response.data.code);
+      const responseMessage = String(response.data.msg || '');
       const isLogoutRequest = String(response.config?.url || '').includes('/auth/logout');
 
       function handleLocalLogout() {
         authStore.resetStore().catch(() => undefined);
       }
 
-      async function handlePassiveLogout() {
-        if (isLogoutRequest) {
-          await authStore.resetStore();
+      async function handlePassiveLogout(notifyBackend = true) {
+        if (passiveLogoutInProgress) {
           return;
         }
 
-        await authStore.logout({ notifyBackend: true });
+        passiveLogoutInProgress = true;
+
+        try {
+          if (isLogoutRequest) {
+            await authStore.resetStore();
+            return;
+          }
+
+          await authStore.logout({ notifyBackend });
+        } finally {
+          passiveLogoutInProgress = false;
+        }
       }
 
       function logoutAndCleanup() {
@@ -69,6 +84,13 @@ export const request = createFlatRequest(
         window.removeEventListener('beforeunload', handleLocalLogout);
 
         request.state.errMsgStack = request.state.errMsgStack.filter(msg => msg !== response.data.msg);
+      }
+
+      // Tenant deactivation is a hard session boundary: single message + forced local logout.
+      if (isTenantInactivePayload(responseCode, responseMessage)) {
+        showErrorMsg(request.state, responseMessage);
+        await handlePassiveLogout(false);
+        return null;
       }
 
       // when the backend response code is in `logoutCodes`, it means the user will be logged out and redirected to login page
@@ -79,7 +101,7 @@ export const request = createFlatRequest(
 
       // when the backend response code is in `modalLogoutCodes`, it means the user will be logged out by displaying a modal
       if (modalLogoutCodes.includes(responseCode) && isLogoutRequest) {
-        await handlePassiveLogout();
+        await handlePassiveLogout(false);
         return null;
       }
 
@@ -130,6 +152,14 @@ export const request = createFlatRequest(
       if (error.code === BACKEND_ERROR_CODE) {
         message = error.response?.data?.msg || message;
         backendErrorCode = String(error.response?.data?.code || '');
+      }
+
+      if (passiveLogoutInProgress || shouldSkipGlobalErrorToast(error)) {
+        return;
+      }
+
+      if (isSessionEndingCode(backendErrorCode)) {
+        return;
       }
 
       // the error message is displayed in the modal
