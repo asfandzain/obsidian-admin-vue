@@ -33,6 +33,7 @@
 - Keep route authorization logic centralized in one module.
 - Keep request models centralized in `src/typings/api/*`.
 - CI must run lint, typecheck, unit test, and contract gates.
+- Keep delete/deactivate UX consistent via `docs/deletion-ui-guidelines.md`.
 
 ## Scaffolding workflow
 

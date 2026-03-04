@@ -3,8 +3,11 @@ import { useTableOperate } from '@/hooks/common/table';
 import { $t } from '@/locales';
 
 type DeleteApiResponse = {
+  data?: unknown;
   error?: unknown;
 };
+
+type DeleteAction = 'deactivated' | 'soft_deleted' | 'queued_for_hard_delete';
 
 interface UseCrudTableOptions<TableData> {
   data: Ref<TableData[]>;
@@ -18,8 +21,27 @@ interface UseCrudTableOptions<TableData> {
 export function useCrudTable<TableData extends object>(options: UseCrudTableOptions<TableData>) {
   const viewMode = ref(false);
 
-  const { drawerVisible, operateType, editingData, handleAdd, handleEdit, checkedRowKeys, onBatchDeleted, onDeleted } =
-    useTableOperate(options.data, options.idKey, options.getData);
+  const { drawerVisible, operateType, editingData, handleAdd, handleEdit, checkedRowKeys } = useTableOperate(
+    options.data,
+    options.idKey,
+    options.getData
+  );
+
+  function resolveDeleteAction(response: DeleteApiResponse): DeleteAction | undefined {
+    if (!response.data || typeof response.data !== 'object') {
+      return undefined;
+    }
+
+    const action = (response.data as { action?: unknown }).action;
+
+    return action === 'deactivated' || action === 'soft_deleted' || action === 'queued_for_hard_delete'
+      ? action
+      : undefined;
+  }
+
+  function resolveDeleteSuccessMessage(action: DeleteAction | undefined): string {
+    return action === 'deactivated' ? $t('common.deactivateSuccess') : $t('common.deleteSuccess');
+  }
 
   function add() {
     if (!options.canManage.value) {
@@ -49,11 +71,12 @@ export function useCrudTable<TableData extends object>(options: UseCrudTableOpti
       return;
     }
 
-    const { error } = await options.deleteById(id);
+    const response = await options.deleteById(id);
 
-    if (!error) {
-      await onDeleted();
+    if (!response.error) {
+      await options.getData();
       await options.onAfterDeleteSuccess?.();
+      window.$message?.success(resolveDeleteSuccessMessage(resolveDeleteAction(response)));
     }
   }
 
@@ -72,8 +95,16 @@ export function useCrudTable<TableData extends object>(options: UseCrudTableOpti
     const failedCount = ids.length - successCount;
 
     if (successCount === ids.length) {
-      await onBatchDeleted();
+      checkedRowKeys.value = [];
+      await options.getData();
       await options.onAfterDeleteSuccess?.();
+      const deactivatedCount = results.filter(
+        item => !item.error && resolveDeleteAction(item) === 'deactivated'
+      ).length;
+
+      window.$message?.success(
+        deactivatedCount === successCount ? $t('common.deactivateSuccess') : $t('common.deleteSuccess')
+      );
 
       return;
     }

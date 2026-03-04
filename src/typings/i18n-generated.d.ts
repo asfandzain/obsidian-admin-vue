@@ -29,6 +29,14 @@ declare namespace App {
       "confirm": string;
       "delete": string;
       "deleteSuccess": string;
+      "deactivateSuccess": string;
+      "deleteConflict": string;
+      "organizationHasAssignedTeams": string;
+      "organizationHasAssignedUsers": string;
+      "teamHasAssignedUsers": string;
+      "teamHasAssignedUsersCannotMoveOrganization": string;
+      "roleHasAssignedUsers": string;
+      "permissionAssignedToRoles": string;
       "batchDeletePartialResult": string;
       "batchDeleteFailed": string;
       "confirmDelete": string;
@@ -715,7 +723,9 @@ declare namespace App {
       | "common.confirm"
       | "common.confirmDelete"
       | "common.createdAt"
+      | "common.deactivateSuccess"
       | "common.delete"
+      | "common.deleteConflict"
       | "common.deleteSuccess"
       | "common.description"
       | "common.edit"
@@ -735,11 +745,15 @@ declare namespace App {
       | "common.noData"
       | "common.noTenants"
       | "common.operate"
+      | "common.organizationHasAssignedTeams"
+      | "common.organizationHasAssignedUsers"
+      | "common.permissionAssignedToRoles"
       | "common.platform"
       | "common.pleaseCheckValue"
       | "common.refresh"
       | "common.reset"
       | "common.role"
+      | "common.roleHasAssignedUsers"
       | "common.search"
       | "common.selectAll"
       | "common.selectLocale"
@@ -750,6 +764,8 @@ declare namespace App {
       | "common.status"
       | "common.switch"
       | "common.switchTenantSuccess"
+      | "common.teamHasAssignedUsers"
+      | "common.teamHasAssignedUsersCannotMoveOrganization"
       | "common.tenant"
       | "common.timezone"
       | "common.tip"
