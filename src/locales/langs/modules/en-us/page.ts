@@ -103,6 +103,8 @@ const pageSection: App.I18n.Schema['page'] = {
     logTypePermission: 'Permission Logs',
     operator: 'Operator',
     operatorPlaceholder: 'Ex: Admin',
+    requestId: 'Request ID',
+    requestIdPlaceholder: 'Ex: req-abc-123',
     target: 'Target',
     ipAddress: 'IP Address',
     userAgent: 'User Agent',

@@ -21,6 +21,7 @@ declare namespace Api {
       newValues: Record<string, unknown>;
       ipAddress: string;
       userAgent: string;
+      requestId: string;
       createTime: string;
     }
 
@@ -31,6 +32,7 @@ declare namespace Api {
       action?: string;
       logType?: AuditLogType;
       userName?: string;
+      requestId?: string;
       dateFrom?: string;
       dateTo?: string;
     }

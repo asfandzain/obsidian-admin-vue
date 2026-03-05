@@ -18,6 +18,7 @@ interface AuditSearchModel {
   action: string | null;
   logType: Api.Audit.AuditLogType | '' | null;
   userName: string | null;
+  requestId: string | null;
   dateRange: [number, number] | null;
 }
 
@@ -80,6 +81,14 @@ const logTypeOptions = computed(() => [
                 v-model:value="model.userName"
                 clearable
                 :placeholder="$t('page.audit.operatorPlaceholder')"
+                @keyup.enter="search"
+              />
+            </NFormItemGi>
+            <NFormItemGi span="24 s:12 m:6" :label="$t('page.audit.requestId')" class="pr-24px">
+              <NInput
+                v-model:value="model.requestId"
+                clearable
+                :placeholder="$t('page.audit.requestIdPlaceholder')"
                 @keyup.enter="search"
               />
             </NFormItemGi>

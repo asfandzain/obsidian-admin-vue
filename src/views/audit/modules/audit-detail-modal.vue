@@ -81,6 +81,7 @@ function closeModal() {
         <NDescriptionsItem :label="$t('page.audit.operator')">{{ rowData?.userName || '-' }}</NDescriptionsItem>
         <NDescriptionsItem :label="$t('common.tenant')">{{ rowData?.tenantName || '-' }}</NDescriptionsItem>
         <NDescriptionsItem :label="$t('page.audit.target')">{{ rowData?.target || '-' }}</NDescriptionsItem>
+        <NDescriptionsItem :label="$t('page.audit.requestId')">{{ rowData?.requestId || '-' }}</NDescriptionsItem>
         <NDescriptionsItem :label="$t('page.audit.ipAddress')">{{ rowData?.ipAddress || '-' }}</NDescriptionsItem>
         <NDescriptionsItem :label="$t('common.createdAt')">{{ rowData?.createTime || '-' }}</NDescriptionsItem>
       </NDescriptions>

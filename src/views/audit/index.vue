@@ -19,6 +19,13 @@ const appStore = useAppStore();
 const { hasAuth } = useAuth();
 const canViewAudit = computed(() => hasAuth('audit.view'));
 
+function getDefaultDateRange(): [number, number] {
+  const now = Date.now();
+  const ONE_DAY = 24 * 60 * 60 * 1000;
+
+  return [now - 7 * ONE_DAY, now];
+}
+
 const searchParams = reactive({
   current: 1,
   size: 10,
@@ -26,7 +33,8 @@ const searchParams = reactive({
   action: null as string | null,
   logType: null as Api.Audit.AuditLogType | '' | null,
   userName: null as string | null,
-  dateRange: null as [number, number] | null
+  requestId: null as string | null,
+  dateRange: getDefaultDateRange() as [number, number] | null
 });
 
 const detailVisible = ref(false);
@@ -99,6 +107,7 @@ const { columns, columnChecks, data, getData, getDataByPage, loading, mobilePagi
       action: searchParams.action ?? undefined,
       logType: searchParams.logType || undefined,
       userName: searchParams.userName ?? undefined,
+      requestId: searchParams.requestId ?? undefined,
       dateFrom: resolveDateFrom(),
       dateTo: resolveDateTo()
     }),
@@ -162,6 +171,12 @@ const { columns, columnChecks, data, getData, getDataByPage, loading, mobilePagi
       minWidth: 130
     },
     {
+      key: 'requestId',
+      title: $t('page.audit.requestId'),
+      align: 'center',
+      minWidth: 200
+    },
+    {
       key: 'createTime',
       title: $t('common.createdAt'),
       align: 'center',
@@ -205,7 +220,8 @@ function resetSearchParamsForTenantChange() {
   searchParams.action = null;
   searchParams.logType = null;
   searchParams.userName = null;
-  searchParams.dateRange = null;
+  searchParams.requestId = null;
+  searchParams.dateRange = getDefaultDateRange();
 }
 
 function handleTenantChanged() {
@@ -238,7 +254,7 @@ useTenantChanged(handleTenantChanged);
       :data="data"
       :loading="loading || !canViewAudit"
       :flex-height="!appStore.isMobile"
-      :scroll-x="1450"
+      :scroll-x="1650"
       :row-key="row => row.id"
       :pagination="mobilePagination"
     />

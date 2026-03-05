@@ -103,6 +103,8 @@ const pageSection: App.I18n.Schema['page'] = {
     logTypePermission: '权限日志',
     operator: '操作人',
     operatorPlaceholder: '例如：Admin',
+    requestId: '请求ID',
+    requestIdPlaceholder: '例如：req-abc-123',
     target: '操作对象',
     ipAddress: 'IP 地址',
     userAgent: '用户代理',

@@ -394,6 +394,8 @@ declare namespace App {
         "logTypePermission": string;
         "operator": string;
         "operatorPlaceholder": string;
+        "requestId": string;
+        "requestIdPlaceholder": string;
         "target": string;
         "ipAddress": string;
         "userAgent": string;
@@ -839,6 +841,8 @@ declare namespace App {
       | "page.audit.oldValues"
       | "page.audit.operator"
       | "page.audit.operatorPlaceholder"
+      | "page.audit.requestId"
+      | "page.audit.requestIdPlaceholder"
       | "page.audit.target"
       | "page.audit.timeRange"
       | "page.audit.userAgent"
