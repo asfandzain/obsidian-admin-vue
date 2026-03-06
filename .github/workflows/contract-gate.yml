@@ -32,6 +32,11 @@ jobs:
         if: ${{ env.BACKEND_REPO_TOKEN == '' }}
         run: git clone --depth=1 https://github.com/${{ env.BACKEND_REPO }}.git backend
 
+      - name: Link backend for api type scripts
+        run: |
+          ln -sfn "$GITHUB_WORKSPACE/backend" "$GITHUB_WORKSPACE/../obsidian-admin-laravel"
+          test -f "$GITHUB_WORKSPACE/../obsidian-admin-laravel/docs/openapi.yaml"
+
       - name: Setup frontend toolchain
         uses: ./.github/actions/setup-frontend
 
