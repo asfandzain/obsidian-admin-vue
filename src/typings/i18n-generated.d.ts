@@ -401,6 +401,10 @@ declare namespace App {
         "userAgent": string;
         "oldValues": string;
         "newValues": string;
+        "dateFrom": string;
+        "dateFromPlaceholder": string;
+        "dateTo": string;
+        "dateToPlaceholder": string;
         "timeRange": string;
         "last24Hours": string;
         "last7Days": string;
@@ -826,6 +830,10 @@ declare namespace App {
       | "menu.systemSettings"
       | "page.audit.action"
       | "page.audit.actionPlaceholder"
+      | "page.audit.dateFrom"
+      | "page.audit.dateFromPlaceholder"
+      | "page.audit.dateTo"
+      | "page.audit.dateToPlaceholder"
       | "page.audit.ipAddress"
       | "page.audit.last24Hours"
       | "page.audit.last7Days"

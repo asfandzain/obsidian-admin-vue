@@ -26,6 +26,17 @@ function getDefaultDateRange(): [number, number] {
   return [now - 7 * ONE_DAY, now];
 }
 
+function createDefaultDateFilters() {
+  const [dateFrom, dateTo] = getDefaultDateRange();
+
+  return {
+    dateFrom,
+    dateTo
+  };
+}
+
+const defaultDateFilters = createDefaultDateFilters();
+
 const searchParams = reactive({
   current: 1,
   size: 10,
@@ -34,7 +45,8 @@ const searchParams = reactive({
   logType: null as Api.Audit.AuditLogType | '' | null,
   userName: null as string | null,
   requestId: null as string | null,
-  dateRange: getDefaultDateRange() as [number, number] | null
+  dateFrom: defaultDateFilters.dateFrom as number | null,
+  dateTo: defaultDateFilters.dateTo as number | null
 });
 
 const detailVisible = ref(false);
@@ -47,19 +59,19 @@ function formatLocalDateTime(timestamp: number): string {
 }
 
 function resolveDateFrom(): string | undefined {
-  if (!searchParams.dateRange?.[0]) {
+  if (!searchParams.dateFrom) {
     return undefined;
   }
 
-  return formatLocalDateTime(searchParams.dateRange[0]);
+  return formatLocalDateTime(searchParams.dateFrom);
 }
 
 function resolveDateTo(): string | undefined {
-  if (!searchParams.dateRange?.[1]) {
+  if (!searchParams.dateTo) {
     return undefined;
   }
 
-  return formatLocalDateTime(searchParams.dateRange[1]);
+  return formatLocalDateTime(searchParams.dateTo);
 }
 
 function resolveLogTypeLabel(logType: Api.Audit.AuditLogType | string | null | undefined): string {
@@ -215,13 +227,16 @@ function view(row: Api.Audit.AuditLogRecord) {
 }
 
 function resetSearchParamsForTenantChange() {
+  const { dateFrom, dateTo } = createDefaultDateFilters();
+
   searchParams.current = 1;
   searchParams.keyword = null;
   searchParams.action = null;
   searchParams.logType = null;
   searchParams.userName = null;
   searchParams.requestId = null;
-  searchParams.dateRange = getDefaultDateRange();
+  searchParams.dateFrom = dateFrom;
+  searchParams.dateTo = dateTo;
 }
 
 function handleTenantChanged() {

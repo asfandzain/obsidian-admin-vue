@@ -19,22 +19,13 @@ interface AuditSearchModel {
   logType: Api.Audit.AuditLogType | '' | null;
   userName: string | null;
   requestId: string | null;
-  dateRange: [number, number] | null;
+  dateFrom: number | null;
+  dateTo: number | null;
 }
 
 const model = defineModel<AuditSearchModel>('model', { required: true });
 
 const { reset, search } = useSearchFormActions(model, () => emit('search'));
-
-const dateShortcuts = computed(() => {
-  const now = Date.now();
-  const ONE_DAY = 24 * 60 * 60 * 1000;
-
-  return {
-    [$t('page.audit.last24Hours')]: () => [now - ONE_DAY, now] as [number, number],
-    [$t('page.audit.last7Days')]: () => [now - 7 * ONE_DAY, now] as [number, number]
-  };
-});
 
 const logTypeOptions = computed(() => [
   { label: $t('page.audit.logTypeAll'), value: '' },
@@ -50,9 +41,9 @@ const logTypeOptions = computed(() => [
   <NCard :bordered="false" size="small" class="card-wrapper">
     <NCollapse>
       <NCollapseItem :title="$t('common.search')" name="audit-search">
-        <NForm label-placement="top" :show-feedback="false">
-          <NGrid responsive="screen" item-responsive>
-            <NFormItemGi span="24 s:12 m:6" :label="$t('common.keyword')" class="pr-24px">
+        <NForm label-placement="top" :show-feedback="false" class="audit-search-form">
+          <NGrid responsive="screen" item-responsive :x-gap="24" :y-gap="14">
+            <NFormItemGi span="24 s:12 m:6" :label="$t('common.keyword')">
               <NInput
                 v-model:value="model.keyword"
                 clearable
@@ -60,7 +51,7 @@ const logTypeOptions = computed(() => [
                 @keyup.enter="search"
               />
             </NFormItemGi>
-            <NFormItemGi span="24 s:12 m:6" :label="$t('page.audit.action')" class="pr-24px">
+            <NFormItemGi span="24 s:12 m:6" :label="$t('page.audit.action')">
               <NInput
                 v-model:value="model.action"
                 clearable
@@ -68,7 +59,7 @@ const logTypeOptions = computed(() => [
                 @keyup.enter="search"
               />
             </NFormItemGi>
-            <NFormItemGi span="24 s:12 m:6" :label="$t('page.audit.logType')" class="pr-24px">
+            <NFormItemGi span="24 s:12 m:6" :label="$t('page.audit.logType')">
               <NSelect
                 v-model:value="model.logType"
                 clearable
@@ -76,7 +67,7 @@ const logTypeOptions = computed(() => [
                 :placeholder="$t('page.audit.logTypePlaceholder')"
               />
             </NFormItemGi>
-            <NFormItemGi span="24 s:12 m:6" :label="$t('page.audit.operator')" class="pr-24px">
+            <NFormItemGi span="24 s:12 m:6" :label="$t('page.audit.operator')">
               <NInput
                 v-model:value="model.userName"
                 clearable
@@ -84,7 +75,7 @@ const logTypeOptions = computed(() => [
                 @keyup.enter="search"
               />
             </NFormItemGi>
-            <NFormItemGi span="24 s:12 m:6" :label="$t('page.audit.requestId')" class="pr-24px">
+            <NFormItemGi span="24 s:12 m:6" :label="$t('page.audit.requestId')">
               <NInput
                 v-model:value="model.requestId"
                 clearable
@@ -92,16 +83,25 @@ const logTypeOptions = computed(() => [
                 @keyup.enter="search"
               />
             </NFormItemGi>
-            <NFormItemGi span="24 s:12 m:6" :label="$t('page.audit.timeRange')" class="pr-24px">
+            <NFormItemGi span="24 s:12 m:6" :label="$t('page.audit.dateFrom')">
               <NDatePicker
-                v-model:value="model.dateRange"
-                type="datetimerange"
+                v-model:value="model.dateFrom"
+                type="datetime"
                 clearable
-                :shortcuts="dateShortcuts"
+                :placeholder="$t('page.audit.dateFromPlaceholder')"
                 class="w-full"
               />
             </NFormItemGi>
-            <NFormItemGi span="24 m:24" class="pr-24px">
+            <NFormItemGi span="24 s:12 m:6" :label="$t('page.audit.dateTo')">
+              <NDatePicker
+                v-model:value="model.dateTo"
+                type="datetime"
+                clearable
+                :placeholder="$t('page.audit.dateToPlaceholder')"
+                class="w-full"
+              />
+            </NFormItemGi>
+            <NFormItemGi span="24" class="pt-6px">
               <NSpace class="w-full" justify="end">
                 <NButton @click="reset">
                   <template #icon>
@@ -124,4 +124,8 @@ const logTypeOptions = computed(() => [
   </NCard>
 </template>
 
-<style scoped></style>
+<style scoped>
+.audit-search-form :deep(.n-form-item-label) {
+  padding-bottom: 10px;
+}
+</style>

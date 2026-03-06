@@ -110,6 +110,10 @@ const pageSection: App.I18n.Schema['page'] = {
     userAgent: '用户代理',
     oldValues: '变更前',
     newValues: '变更后',
+    dateFrom: '开始时间',
+    dateFromPlaceholder: '请选择开始时间',
+    dateTo: '结束时间',
+    dateToPlaceholder: '请选择结束时间',
     timeRange: '时间范围',
     last24Hours: '最近24小时',
     last7Days: '最近7天'

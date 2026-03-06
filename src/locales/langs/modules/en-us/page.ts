@@ -110,6 +110,10 @@ const pageSection: App.I18n.Schema['page'] = {
     userAgent: 'User Agent',
     oldValues: 'Old Values',
     newValues: 'New Values',
+    dateFrom: 'Start Time',
+    dateFromPlaceholder: 'Select start time',
+    dateTo: 'End Time',
+    dateToPlaceholder: 'Select end time',
     timeRange: 'Time Range',
     last24Hours: 'Last 24 Hours',
     last7Days: 'Last 7 Days'
