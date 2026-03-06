@@ -36,6 +36,44 @@ declare namespace BackendGenerated {
       }
     }
 
+    namespace Organization {
+      interface CreateOrganizationDTO {
+        organizationCode: string;
+        organizationName: string;
+        description: string;
+        status: string;
+        sort: number;
+      }
+
+      interface UpdateOrganizationDTO {
+        organizationCode: string;
+        organizationName: string;
+        description: string;
+        status: string | null;
+        sort: number | null;
+      }
+    }
+
+    namespace Team {
+      interface CreateTeamDTO {
+        organizationId: number;
+        teamCode: string;
+        teamName: string;
+        description: string;
+        status: string;
+        sort: number;
+      }
+
+      interface UpdateTeamDTO {
+        organizationId: number;
+        teamCode: string;
+        teamName: string;
+        description: string;
+        status: string | null;
+        sort: number | null;
+      }
+    }
+
     namespace Tenant {
       interface CreateTenantDTO {
         tenantCode: string;
@@ -58,6 +96,8 @@ declare namespace BackendGenerated {
         status: string;
         roleId: number;
         tenantId: number | null;
+        organizationId: number | null;
+        teamId: number | null;
       }
 
       interface UpdateUserDTO {
@@ -67,6 +107,8 @@ declare namespace BackendGenerated {
         status: string;
         roleId: number;
         tenantId: number | null;
+        organizationId: number | null;
+        teamId: number | null;
       }
     }
   }
@@ -75,9 +117,10 @@ declare namespace BackendGenerated {
     interface AuditLogListResource {
       id: number;
       action: string;
-      userName: string;
+      logType: string;
+      userName: unknown;
       tenantId: string;
-      tenantName: string;
+      tenantName: unknown;
       auditableType: unknown;
       auditableId: string;
       target: string;
@@ -102,6 +145,22 @@ declare namespace BackendGenerated {
       updateTime: string;
     }
 
+    interface OrganizationListResource {
+      id: number;
+      tenantId: string;
+      tenantName: unknown;
+      organizationCode: string;
+      organizationName: string;
+      description: string;
+      status: string;
+      sort: number;
+      teamCount: number;
+      userCount: number;
+      version: number;
+      createTime: string;
+      updateTime: string;
+    }
+
     interface PermissionListResource {
       id: number;
       permissionCode: string;
@@ -120,7 +179,7 @@ declare namespace BackendGenerated {
       roleCode: string;
       roleName: string;
       tenantId: string;
-      tenantName: string;
+      tenantName: unknown;
       description: string;
       status: string;
       level: unknown;
@@ -128,6 +187,22 @@ declare namespace BackendGenerated {
       userCount: number;
       version: number;
       permissionCodes: string[];
+      createTime: string;
+      updateTime: string;
+    }
+
+    interface TeamListResource {
+      id: number;
+      tenantId: string;
+      organizationId: string;
+      organizationName: unknown;
+      teamCode: string;
+      teamName: string;
+      description: string;
+      status: string;
+      sort: number;
+      userCount: number;
+      version: number;
       createTime: string;
       updateTime: string;
     }
@@ -147,9 +222,15 @@ declare namespace BackendGenerated {
       id: number;
       userName: string;
       email: string;
-      roleCode: string | null;
-      roleName: string | null;
+      roleCode: unknown;
+      roleName: unknown;
+      roleLevel: unknown;
+      organizationId: string;
+      organizationName: unknown;
+      teamId: string;
+      teamName: unknown;
       status: string;
+      manageable: unknown;
       version: number;
       createTime: string;
       updateTime: string;
